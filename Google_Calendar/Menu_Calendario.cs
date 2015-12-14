@@ -26,6 +26,8 @@ namespace Google_Calendar
         static string ApplicationName = "GuateFuturo";
         IFormatProvider provider = new CultureInfo("en-US");
 
+        int cLeft = 1;
+
         public Menu_Calendario()
         {
             InitializeComponent();
@@ -36,12 +38,12 @@ namespace Google_Calendar
             button3.Enabled = false;
             button4.Enabled = false;
         }        
-
+        //boton listar
         private void button1_Click(object sender, EventArgs e)
         {
             Listar_Eventos();
         }
-
+        //boton agregar
         private void button2_Click(object sender, EventArgs e)
         {
             string tmp = textBox1.Text;
@@ -63,7 +65,7 @@ namespace Google_Calendar
 
             Agregar_Evento(titulo, desc ,strdt, strdt2, tmp, tmp2);  
         }
-
+        //boton eliminar
         private void button3_Click(object sender, EventArgs e)
         {
             //String id_E= sender.ToString();
@@ -72,7 +74,7 @@ namespace Google_Calendar
             //MessageBox.Show("boton 3--> " + id_E);
             Eliminar_Evento(tmp);
         }
-
+        //boton modificar
         private void button4_Click(object sender, EventArgs e)
         {
             string tmp = textBox1.Text;
@@ -86,6 +88,11 @@ namespace Google_Calendar
             DateTime dt2 = Convert.ToDateTime(dateTimePicker2.Text);
             MessageBox.Show("combobox--> " + tmp3);
             Modificar_Evento(titulo, desc, strdt, strdt2, tmp, tmp2, tmp3);            
+        }
+        //boton agregar email
+        private void button5_Click(object sender, EventArgs e)
+        {
+            AddNewTextBox();
         }
 
         private void Listar_Eventos()
@@ -244,7 +251,7 @@ namespace Google_Calendar
             Listar_Eventos();
         }
 
-        private void Modificar_Evento(String Titulo, String Desc, String FI, String FF, String E1, String E2, String ev_I)
+        private void Modificar_Evento(String Titulo, String Desc, String FI, String FF, String E1, String E2, String event_Id)
         {
             String FIT = FI;
             String FFT = FF;
@@ -252,7 +259,7 @@ namespace Google_Calendar
             String E2T = E2;
             String TituloT = Titulo;
             String DescT = Desc;
-            String eventId = ev_I;
+            String eventId = event_Id;
             //String ID_ET = ID_E;
             //MessageBox.Show("Primero DT-->" + FIT);
             //MessageBox.Show("Segundo DT-->" + FFT);
@@ -325,7 +332,7 @@ namespace Google_Calendar
             Console.Read();
         }
 
-        private void Eliminar_Evento(string id_evento)
+        private void Eliminar_Evento(String id_evento)
         {
             String id_eventoT = id_evento;
             UserCredential credential;
@@ -360,6 +367,19 @@ namespace Google_Calendar
             MessageBox.Show("Evento Eliminado");
             Console.Read();
             Listar_Eventos();
+        }
+
+        public System.Windows.Forms.TextBox AddNewTextBox()
+        {
+            System.Windows.Forms.TextBox txt = new System.Windows.Forms.TextBox();
+            
+            this.Controls.Add(txt);
+            int margen_top = cLeft * 25;
+            txt.Top = margen_top + 151;
+            txt.Left = 176;
+            //txt.Text = "TextBox " + this.cLeft.ToString();
+            cLeft = cLeft + 1;
+            return txt;
         }
     }
 }
