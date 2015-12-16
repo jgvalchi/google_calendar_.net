@@ -25,9 +25,7 @@ namespace Google_Calendar
         static string[] Scopes = { CalendarService.Scope.Calendar };
         static string ApplicationName = "GuateFuturo";
         IFormatProvider provider = new CultureInfo("en-US");
-
         int cLeft = 1;
-
         public Menu_Calendario()
         {
             InitializeComponent();
@@ -93,6 +91,7 @@ namespace Google_Calendar
         private void button5_Click(object sender, EventArgs e)
         {
             AddNewTextBox();
+          
         }
 
         private void Listar_Eventos()
@@ -371,15 +370,61 @@ namespace Google_Calendar
 
         public System.Windows.Forms.TextBox AddNewTextBox()
         {
+            
             System.Windows.Forms.TextBox txt = new System.Windows.Forms.TextBox();
             
             this.Controls.Add(txt);
             int margen_top = cLeft * 25;
             txt.Top = margen_top + 151;
             txt.Left = 176;
+            txt.Name = "email_box" + cLeft;
             //txt.Text = "TextBox " + this.cLeft.ToString();
             cLeft = cLeft + 1;
+            String cosa = cLeft.ToString();
+            //MessageBox.Show(cosa);
+            if (cLeft == 8)
+            {
+                button5.Enabled = false;
+            }
+
             return txt;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            GetTextBoxStrings();
+        }
+
+        private void GetTextBoxStrings()
+        {
+            //string cosito = cLeft.ToString();
+            //MessageBox.Show(cosito);
+            cLeft = cLeft - 1;
+            //Find control in the Panel with Name
+            List<string> list = new List<string>();
+            //Loop through the controls and find the control 
+            for (int i = 1; i <= cLeft; i++)
+            {
+                //Create textbox object back from control object
+                Control[] ctrls = this.Controls.Find("email_box" + i, false);
+                TextBox txtBox = (TextBox)ctrls[0];
+                //Display its Test
+                if (txtBox.Text != "")
+                {
+                    MessageBox.Show("textbox --> " + txtBox.Text);
+                    list.Add(txtBox.Text);
+
+                }
+                else
+                {
+                    MessageBox.Show("Esta vacio la casilla email_box" + cLeft.ToString());
+                }
+            }
+
+            for (int i = 0; i < list.Count; i++) // Loop with for.
+            {
+                MessageBox.Show("Lista --> " + list[i]);
+            }
         }
     }
 }
